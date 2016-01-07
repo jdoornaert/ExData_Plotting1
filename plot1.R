@@ -21,14 +21,12 @@ df <- fread("household_power_consumption.txt", sep = ";", header = FALSE, na.str
 # Concatenate Date and Time, convert to POSIXct format
 df <- mutate(df, DateTime = dmy_hms(paste(Date, Time, sep = " ")))
 
-# One graph per page
-par(mfrow=c(1,1))
+# Output to PNG file
+png("./plot1.png", width = 480, height = 480)
 
 # Histogram of Global Active Power column
 hist(df$Global_active_power, col = "red", labels = FALSE, main = "Global Active Power", xlab = "Global Active Power (kilowatts)", ylab = "Frequency")
 
-# Copy to PNG file
-dev.copy(device = png, filename = 'plot1.png', width = 480, height = 480)
 dev.off() 
 
 # And finally, clean up again...

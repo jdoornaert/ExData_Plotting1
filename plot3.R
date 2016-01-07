@@ -21,8 +21,8 @@ df <- fread("household_power_consumption.txt", sep = ";", header = FALSE, na.str
 # Concatenate Date and Time, convert to POSIXct format
 df <- mutate(df, DateTime = dmy_hms(paste(Date, Time, sep = " ")))
 
-# One graph per page
-par(mfrow=c(1,1))
+# Output to PNG file
+png("./plot3.png", width = 480, height = 480)
 
 # Plot of the 3 Sub_metering variables vs. time, with legend
 plot(x = df$DateTime, y = df$Sub_metering_1, type = "l", col = "black", xlab = "", ylab = "Energy sub metering")
@@ -30,8 +30,6 @@ lines(x = df$DateTime, y = df$Sub_metering_2, type = "l", col = "red")
 lines(x = df$DateTime, y = df$Sub_metering_3, type = "l", col = "blue")
 legend("topright", c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), col = c("black", "red", "blue"), text.col = "black", lty = 1, lwd = 1)
 
-# Copy to PNG file
-dev.copy(device = png, filename = 'plot3.png', width = 480, height = 480)
 dev.off() 
 
 # And finally, clean up again...

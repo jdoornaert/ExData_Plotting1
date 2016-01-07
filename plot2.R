@@ -21,14 +21,12 @@ df <- fread("household_power_consumption.txt", sep = ";", header = FALSE, na.str
 # Concatenate Date and Time, convert to POSIXct format
 df <- mutate(df, DateTime = dmy_hms(paste(Date, Time, sep = " ")))
 
-# One graph per page
-par(mfrow=c(1,1))
+# Output to PNG file
+png("./plot2.png", width = 480, height = 480)
 
 # Plot of Global Active Power vs. time
 plot(x = df$DateTime, y = df$Global_active_power, type = "l", xlab = "", ylab = "Global Active Power (kilowatts)")
 
-# Copy to PNG file
-dev.copy(device = png, filename = 'plot2.png', width = 480, height = 480)
 dev.off() 
 
 # And finally, clean up again...
